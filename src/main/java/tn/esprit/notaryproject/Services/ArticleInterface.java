@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 public interface ArticleInterface {
-    //hello
+    //hello1
     Article addArticle(Article article);
     Article updateArticle(Article article);
     void deleteArticle(Long IdArticle);
