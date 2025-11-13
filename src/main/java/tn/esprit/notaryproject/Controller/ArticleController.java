@@ -29,7 +29,7 @@ public class ArticleController {
 
     @Autowired
     ArticleInterface articleInterface;
-
+//jzffshtf
     @PostMapping("/AddArticles")
     public Article addArticle(@RequestBody Article article) {
         return articleInterface.addArticle(article);
