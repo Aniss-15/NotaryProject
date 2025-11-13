@@ -116,7 +116,7 @@ pipeline {
                     
                     # Simple scan with minimal options
                     trivy image \
-                        --timeout 15m \
+                        --timeout 5m \
                         --skip-db-update \
                         --skip-java-db-update \
                         --scanners vuln \
@@ -202,14 +202,14 @@ pipeline {
                     
                     # Run ZAP baseline scan
                     echo "=== Running ZAP Baseline Scan ==="
-                    docker run --rm \\
-                        --network="host" --user root \\
-                        -v \$(pwd):/zap/wrk/:rw \\
-                        -t ghcr.io/zaproxy/zaproxy:stable \\
-                        zap-baseline.py \\
-                        -t http://localhost:8081 \\
-                        -r zap-baseline-report.html \\
-                        -w zap-baseline-report.md \\
+                    docker run --rm \
+                        --network="host" --user root \
+                        -v \$(pwd):/zap/wrk/:rw \
+                        -t zaproxy/zaproxy:stable \
+                        zap-baseline.py \
+                        -t http://localhost:8081 \
+                        -r zap-baseline-report.html \
+                        -w zap-baseline-report.md \
                         -I
                     
      
