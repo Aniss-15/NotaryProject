@@ -7,7 +7,7 @@ pipeline {
         NVD_API_KEY = credentials('NVD_API_KEY')
         IMAGE_TAG = 'notary-app:latest'
         APP_PORT = '8081'
-        CONTAINER_NAME = 'notary-app-'
+        CONTAINER_NAME = 'notary-app'
     }
 
     stages {
@@ -207,7 +207,7 @@ pipeline {
                         -v \$(pwd):/zap/wrk/:rw \\
                         -t ghcr.io/zaproxy/zaproxy:stable \\
                         zap-baseline.py \\
-                        -t http://localhost:\${ACTUAL_PORT} \\
+                        -t http://localhost:8081 \\
                         -r zap-baseline-report.html \\
                         -w zap-baseline-report.md \\
                         -I
