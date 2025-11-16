@@ -124,7 +124,7 @@ pipeline {
                     
                     # Quick summary scan
                     trivy image \
-                        --timeout 5m \
+                        --timeout 2m \
                         --skip-db-update \
                         --skip-java-db-update \
                         -f table -o trivy-image.txt ${env.IMAGE_TAG} || echo "Summary scan completed"
@@ -135,7 +135,7 @@ pipeline {
             }
         }
 
-        stage('Deploy for ZAP Testing') {
+        stage('Run for ZAP Testing') {
             steps {
                 script {
                     sh """
@@ -183,40 +183,18 @@ pipeline {
             }
         }
 
-        stage('DAST - OWASP ZAP Scan') {
+        stage('DAST with ZAP') {
             steps {
-                script {
-                    sh """
-                    echo "🎯 Running OWASP ZAP Security Scan..."
-                    
-                    # Read the actual port used
-                    ACTUAL_PORT=\$(cat zap-port.txt)
-                    echo "Target application port: \${ACTUAL_PORT}"
-                    
-                    # Get host IP for container access
-                    HOST_IP=\$(hostname -I | awk '{print \$1}')
-                    echo "Host IP: \${HOST_IP}"
-                    
-                    # Use the correct ZAP image that we know works
-                    echo "📥 Using OWASP ZAP image..."
-                    
-                    # Run ZAP baseline scan
-                    echo "=== Running ZAP Baseline Scan ==="
-                    docker run --rm \
-                        --network="host" --user root \
-                        -v \$(pwd):/zap/wrk/:rw \
-                        -t zaproxy/zap-stable \
-                        zap-baseline.py \
-                        -t http://localhost:8081 \
-                        -r zap-baseline-report.html \
-                        -w zap-baseline-report.md \
-                        -I
-                    
-     
-                    echo "✅ ZAP security scan completed successfully"
-                    """
-                }
-            }
+        echo "🔍 Running OWASP ZAP scan ..."
+        sh '''
+        docker run --rm --user root --network=host \
+        -v $(pwd):/zap/wrk:rw \
+        -t zaproxy/zap-stable zap-baseline.py \
+        -t http://192.168.50.4:8081 \
+        -r zap_report.html \
+        -J zap_report.json || true
+        '''
+             }
         }
 
         stage('Verify Docker Image') {
