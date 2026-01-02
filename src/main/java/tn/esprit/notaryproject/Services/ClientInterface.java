@@ -6,6 +6,7 @@ import tn.esprit.notaryproject.Entities.User;
 import java.util.List;
 
 public interface ClientInterface {
+    //test:
     Client addClient(Client client);
     Client updateClient(Long  Idclient , Client clientDetails);
     void deleteClient(Long Idclient);
