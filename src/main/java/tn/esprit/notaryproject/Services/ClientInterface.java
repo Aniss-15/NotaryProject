@@ -16,4 +16,5 @@ public interface ClientInterface {
     Client DessafecterArticleToClient(Long Idclient , Long Idarticle);
     Client AssingChequeTocClient(Long Idclient , Long IdCheque);
     Client DesafecterChequeFromClient(Long Idclient , Long IdCheque);
+    Client DesafecterClientsFromUser(Long userId , Long Idclient);
 }
