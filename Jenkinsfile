@@ -5,7 +5,7 @@ pipeline {
         SONAR_HOST_URL = 'http://192.168.50.4:9000'
         SONAR_AUTH_TOKEN = credentials('sonarqube')
         NVD_API_KEY = credentials('NVD_API_KEY')
-        IMAGE_TAG = 'notary-app:latest'
+        IMAGE_TAG = 'anissch/notary-app:latest'
         APP_PORT = '8081'
         CONTAINER_NAME = 'notary-app'
     }
