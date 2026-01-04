@@ -109,31 +109,38 @@ pipeline {
         }
 
         stage("Trivy Scan Image") {
-            steps {
-                script {
-                    sh """
-                    echo '🔍 Running Trivy scan on ${env.IMAGE_TAG}'
-                    
-                    # Simple scan with minimal options
-                    trivy image \
-                        --timeout 5m \
-                        --skip-db-update \
-                        --skip-java-db-update \
-                        --scanners vuln \
-                        -f json -o trivy-image.json ${env.IMAGE_TAG} || echo "Scan completed"
-                    
-                    # Quick summary scan
-                    trivy image \
-                        --timeout 2m \
-                        --skip-db-update \
-                        --skip-java-db-update \
-                        -f table -o trivy-image.txt ${env.IMAGE_TAG} || echo "Summary scan completed"
-                    
-                    echo "✅ Trivy scan attempted - check artifacts for results"
-                    """
-                }
+            environment {
+        TRIVY_DISABLE_UNICODE = 'true'
+        LANG = 'C.UTF-8'
+        LC_ALL = 'C.UTF-8'
             }
+         steps {
+        script {
+            sh """
+            echo '🔍 Running Trivy scan on ${IMAGE_TAG}'
+
+            # Table report (ASCII-safe for Jenkins)
+            trivy image \
+                --timeout 5m \
+                --skip-db-update \
+                --skip-java-db-update \
+                --scanners vuln \
+                -f table -o trivy-image.txt ${IMAGE_TAG}
+
+            # JSON report (for automation / audits)
+            trivy image \
+                --timeout 5m \
+                --skip-db-update \
+                --skip-java-db-update \
+                --scanners vuln \
+                -f json -o trivy-image.json ${IMAGE_TAG}
+
+            echo "✅ Trivy scan completed successfully"
+            """
         }
+    }
+}
+
 
         stage('Run for ZAP Testing') {
             steps {
