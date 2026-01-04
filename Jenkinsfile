@@ -203,6 +203,29 @@ pipeline {
         '''
              }
         }
+        stage('Push Image to Docker Hub') {
+    steps {
+        script {
+            withCredentials([usernamePassword(
+                credentialsId: 'dockerhub',
+                usernameVariable: 'DOCKER_USER',
+                passwordVariable: 'DOCKER_PASS'
+            )]) {
+                sh '''
+                    echo "🔐 Logging into Docker Hub..."
+                    echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+
+                    echo "📤 Pushing image to Docker Hub..."
+                    docker push ${IMAGE_TAG}
+
+                    echo "🚪 Logging out from Docker Hub..."
+                    docker logout
+                '''
+            }
+        }
+    }
+}
+
 
         stage('Verify Docker Image') {
             steps {
