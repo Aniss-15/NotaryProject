@@ -15,5 +15,5 @@ public interface ClientInterface {
     Client AssingArticleToClient(Long Idclient , Long Idarticle);
     Client DessafecterArticleToClient(Long Idclient , Long Idarticle);
     Client AssingChequeTocClient(Long Idclient , Long IdCheque);
-   //hello11
+   //finalchanges
 }
