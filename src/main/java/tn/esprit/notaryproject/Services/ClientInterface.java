@@ -14,5 +14,5 @@ public interface ClientInterface {
     List<Client> DisplayAllClients();
     Client AssingArticleToClient(Long Idclient , Long Idarticle);
     Client DessafecterArticleToClient(Long Idclient , Long Idarticle);
-    Client AssingChequeTocClient(Long Idclient , Long IdCheque);//assigneachchequetoclient
+    Client AssingChequeTocClient(Long Idclient , Long IdCheque);//assigneachchequetoclient1
 }
