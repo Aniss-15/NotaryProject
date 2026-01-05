@@ -13,7 +13,7 @@ public interface ArticleInterface {
     void deleteArticle(Long IdArticle);
     List<Article> getArticles();
     Boolean validateArticleDate(Article article, MultipartFile imageFile);
-    String extractTextFromImage(MultipartFile imageFile);//extractionn
+    String extractTextFromImage(MultipartFile imageFile);//extractionnFile
 
 
 
