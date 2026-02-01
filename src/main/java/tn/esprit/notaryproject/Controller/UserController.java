@@ -13,7 +13,7 @@ import tn.esprit.notaryproject.Services.UserInterface;
 
 import java.util.List;
 import java.util.Map;
-//libraey
+//library
 
 @RestController
 @RequestMapping("/api/user")
