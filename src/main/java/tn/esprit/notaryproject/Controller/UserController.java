@@ -14,7 +14,7 @@ import tn.esprit.notaryproject.Services.UserInterface;
 import java.util.List;
 import java.util.Map;
 //library
-
+@RequestBody
 @RestController
 @RequestMapping("/api/user")
 @CrossOrigin(origins = "*")
