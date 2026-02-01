@@ -10,7 +10,7 @@ import tn.esprit.notaryproject.Entities.User;
 import tn.esprit.notaryproject.Services.ClientInterface;
 
 import java.util.List;
-
+//clientcontroller
 @RestController
 @NoArgsConstructor
 @RequestMapping("/Clientss")
